@@ -1,7 +1,9 @@
 import numpy as np
 
+
 def convert_text_to_ascii_numpy_array(text):
     return np.array([ord(c) for c in text])
+
 
 def split_ascii_numpy_array_into_batches(ascii_numpy_array, seq_size_per_batch):
     # Split ascii_numpy_array into batches of seq_zier_per_batch, and add 0 padding for the last batch to make shape right
@@ -26,8 +28,9 @@ def split_ascii_numpy_array_into_batches(ascii_numpy_array, seq_size_per_batch):
     
     return batches
 
+
 def convert_input_batches_from_output_batches(input_batches):\
     # shift right by one and add 0 as the first element per each batch
-    zero_array = np.zeros((len(input_batches),  len(input_batches[0])))
+    zero_array = np.zeros((len(input_batches),  len(input_batches[0])), dtype=np.uint8)
     zero_array[:, 1:input_batches.shape[1]] = input_batches[:, 0:-1]
     return zero_array
