@@ -40,7 +40,8 @@ if __name__ == '__main__':
     # print(str(propsoed_out))
     data = {
         "input": input_batches,
-        "output": batches
+        "output": batches,
+        "vocab_size": vocab_size
     }
     loss = tmodel.calcualte_loss(params, data, model)
     print("loss: " + str(loss))
