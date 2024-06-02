@@ -45,11 +45,13 @@ class TurtleLlmModel(nn.Module):
       )
       x = x @ embed
       x = jax.nn.relu(x)
+
+    # x -= pos_embedding
       
     return x @ jnp.asarray(embedding).T
 
 
-def calcualte_loss(params, data, model):
+def calculate_loss(params, data, model):
   proposed_outputs = model.apply(params, data["input"])
   one_hot = jax.nn.one_hot(data["output"], data["vocab_size"])
   return jnp.mean(optax.softmax_cross_entropy(proposed_outputs, one_hot))
