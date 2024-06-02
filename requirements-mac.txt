@@ -1,0 +1,5 @@
+numpy==1.26
+flax==0.8
+jax-metal==0.0.7
+jax==0.4.26
+jaxlib==0.4.26
