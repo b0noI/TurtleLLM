@@ -1,2 +1,5 @@
+tensorflow==2.16.1
+tensorboard==2.16.2
 numpy==1.26
 flax==0.8
+jax==0.4
