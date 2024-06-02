@@ -1,6 +1,12 @@
 import numpy as np
 
 
+def convert_from_ascii_numpy_array_to_str(ascii_array):
+    # Assuming you have a function to convert ASCII numpy array back to text
+    text = ''.join(chr(char) for char in ascii_array if char != 0)
+    return text
+
+
 def convert_text_to_ascii_numpy_array(text):
     return np.array([ord(c) for c in text])
 
@@ -29,7 +35,7 @@ def split_ascii_numpy_array_into_batches(ascii_numpy_array, seq_size_per_batch):
     return batches
 
 
-def convert_input_batches_from_output_batches(input_batches):\
+def convert_input_batches_from_output_batches(input_batches):
     # shift right by one and add 0 as the first element per each batch
     zero_array = np.zeros((len(input_batches),  len(input_batches[0])), dtype=np.uint8)
     zero_array[:, 1:input_batches.shape[1]] = input_batches[:, 0:-1]
