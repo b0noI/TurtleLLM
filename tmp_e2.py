@@ -2,7 +2,7 @@ import jax
 import jax.numpy as jnp
 import datetime
 
-MATRIX_DIM = 32768
+MATRIX_DIM = int(32768 / 2 / 2)
 STEPS = 10
 
 A = jnp.ones( (MATRIX_DIM, MATRIX_DIM), dtype = jnp.float32 )
@@ -12,13 +12,24 @@ num_bites = A.size * 4 # since float32
 # total_num_bytes_crossing_memory = 3 * num_bites
 total_flops = MATRIX_DIM * MATRIX_DIM
 
-jax.profiler.start_trace("/tmp/trace1")
-start_time = datetime.datetime.now()
-for _ in range(STEPS):
-    C = A + B
-end_time = datetime.datetime.now()
-#jax.profiler.stop_trace()
+def time_it(f, *args):
+  times = []
+  jax.block_until_ready(f(*args))
+  for _ in range(STEPS):
+    start_time = datetime.datetime.now()
+    jax.block_until_ready(f(*args))
+    end_time = datetime.datetime.now()
+    times.append((end_time - start_time).total_seconds())
+  average_time = sum(times) / len(times)
 
-average_time = (end_time - start_time).total_seconds() / STEPS
+  print(f"time: {average_time:.6f}")
+  
 
-print(f"time: {average_time}, tfps: {total_flops/average_time / 10**12}")
+def sum_matrix(a, b):
+    return jax.nn.relu(a + b)
+
+time_it(sum_matrix, A, B)
+
+jit_sum = jax.jit(sum_matrix)
+
+time_it(jit_sum, A, B)
