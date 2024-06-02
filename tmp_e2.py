@@ -24,12 +24,12 @@ def time_it(f, *args):
 
   print(f"time: {average_time:.6f}")
   
-
+@jax.jit
 def sum_matrix(a, b):
     return jax.nn.relu(a + b)
 
 time_it(sum_matrix, A, B)
 
-jit_sum = jax.jit(sum_matrix)
+# jit_sum = jax.jit(sum_matrix)
 
-time_it(jit_sum, A, B)
+# time_it(jit_sum, A, B)
