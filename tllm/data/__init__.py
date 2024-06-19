@@ -11,6 +11,7 @@ def convert_text_to_ascii_numpy_array(text):
     return np.array([ord(c) for c in text])
 
 
+
 def split_ascii_numpy_array_into_batches(ascii_numpy_array, seq_size_per_batch):
     # Split ascii_numpy_array into batches of seq_zier_per_batch, and add 0 padding for the last batch to make shape right
     # return should be numpy array with the right shape.

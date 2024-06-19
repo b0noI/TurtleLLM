@@ -7,6 +7,8 @@ B = jnp.ones((1024, 1024))
 
 jax.debug.visualize_array_sharding(A)
 
+print(jax.devices())
+
 devices2d = np. reshape(jax.devices(), (4, 2))
 
 mesh = jax.sharding.Mesh(devices2d, ["mainMesh", "mainMesh2"])
